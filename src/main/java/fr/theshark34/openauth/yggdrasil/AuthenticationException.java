@@ -16,48 +16,40 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth.model.request;
+package fr.theshark34.openauth.yggdrasil;
+
+import fr.theshark34.openauth.yggdrasil.model.AuthErrorModel;
 
 /**
- * JSON Model of an validate request
+ * Authentication exceptions
  *
  * @version 1.0.0-RELEASE
  * @author TheShark34
  */
-public class ValidateRequest {
+public class AuthenticationException extends Exception {
 
     /**
-     * The access token that you want to validate
+     * The given JSON model instance of the error
      */
-    private String accessToken;
+    private AuthErrorModel model;
 
     /**
-     * Validate Request constructor
+     * Create a new Authentication Exception
      *
-     * @param accessToken
-     *            The access token that you want to validate
+     * @param model
+     *            The given JSON model instance of the error
      */
-    public ValidateRequest(String accessToken) {
-        this.accessToken = accessToken;
+    public AuthenticationException(AuthErrorModel model) {
+        this.model = model;
     }
 
     /**
-     * Sets a new access token
+     * Returns the given JSON model instance of the error
      *
-     * @param accessToken
-     *            The new access token
+     * @return The error model
      */
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    /**
-     * Returns the access token (Given by the constructor or the setter)
-     *
-     * @return The given access token
-     */
-    public String getAccessToken() {
-        return accessToken;
+    public AuthErrorModel getErrorModel() {
+        return model;
     }
 
 }

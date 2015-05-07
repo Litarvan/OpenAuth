@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth.model;
+package fr.theshark34.openauth.yggdrasil.model;
 
 /**
  * JSON model of an error

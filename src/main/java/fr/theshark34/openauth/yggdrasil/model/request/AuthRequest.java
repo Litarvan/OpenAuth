@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth.model.request;
+package fr.theshark34.openauth.yggdrasil.model.request;
 
-import fr.theshark34.openauth.model.AuthAgent;
+import fr.theshark34.openauth.yggdrasil.model.AuthAgent;
 
 /**
  * JSON Model of an authentication request

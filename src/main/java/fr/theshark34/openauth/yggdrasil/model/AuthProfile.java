@@ -16,40 +16,63 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth;
-
-import fr.theshark34.openauth.model.AuthErrorModel;
+package fr.theshark34.openauth.yggdrasil.model;
 
 /**
- * Authentication exceptions
+ * JSON model of a profile
  *
  * @version 1.0.0-RELEASE
  * @author TheShark34
  */
-public class AuthenticationException extends Exception {
+public class AuthProfile {
 
     /**
-     * The given JSON model instance of the error
+     * The profile name
      */
-    private AuthErrorModel model;
+    private String name;
 
     /**
-     * Create a new Authentication Exception
-     *
-     * @param model
-     *            The given JSON model instance of the error
+     * The profile UUID
      */
-    public AuthenticationException(AuthErrorModel model) {
-        this.model = model;
+    private String id;
+
+    /**
+     * Blank auth profile
+     */
+    public AuthProfile() {
+        this.name = "";
+        this.id = "";
     }
 
     /**
-     * Returns the given JSON model instance of the error
+     * Normal auth profile
      *
-     * @return The error model
+     * @param name
+     *            The profile name
+     * @param id
+     *            The profile UUID
      */
-    public AuthErrorModel getErrorModel() {
-        return model;
+    public AuthProfile(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    /**
+     * Returns the name of the profile
+     *
+     * @return The profile name
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Returns the profile UUID
+     *
+     * @return The profile UUID
+     */
+    public String getId() {
+        return this.id;
     }
 
 }

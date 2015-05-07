@@ -16,63 +16,48 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth.model;
+package fr.theshark34.openauth.yggdrasil.model.request;
 
 /**
- * JSON model of a profile
+ * JSON Model of an validate request
  *
  * @version 1.0.0-RELEASE
  * @author TheShark34
  */
-public class AuthProfile {
+public class ValidateRequest {
 
     /**
-     * The profile name
+     * The access token that you want to validate
      */
-    private String name;
+    private String accessToken;
 
     /**
-     * The profile UUID
+     * Validate Request constructor
+     *
+     * @param accessToken
+     *            The access token that you want to validate
      */
-    private String id;
-
-    /**
-     * Blank auth profile
-     */
-    public AuthProfile() {
-        this.name = "";
-        this.id = "";
+    public ValidateRequest(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     /**
-     * Normal auth profile
+     * Sets a new access token
      *
-     * @param name
-     *            The profile name
-     * @param id
-     *            The profile UUID
+     * @param accessToken
+     *            The new access token
      */
-    public AuthProfile(String name, String id) {
-        this.name = name;
-        this.id = id;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     /**
-     * Returns the name of the profile
+     * Returns the access token (Given by the constructor or the setter)
      *
-     * @return The profile name
+     * @return The given access token
      */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * Returns the profile UUID
-     *
-     * @return The profile UUID
-     */
-    public String getId() {
-        return this.id;
+    public String getAccessToken() {
+        return accessToken;
     }
 
 }

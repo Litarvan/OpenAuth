@@ -16,20 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth.model.response;
-
-import fr.theshark34.openauth.model.AuthProfile;
+package fr.theshark34.openauth.yggdrasil.model.response;
 
 /**
- * JSON Model of an authentication response
+ * JSON Model of an refresh response
  *
  * @version 1.0.0-RELEASE
  * @author TheShark34
  */
-public class AuthResponse {
+public class RefreshResponse {
 
     /**
-     * The access token
+     * The access token (not the same as the one given by the request)
      */
     private String accessToken;
 
@@ -39,41 +37,25 @@ public class AuthResponse {
     private String clientToken;
 
     /**
-     * All available profiles
-     */
-    private AuthProfile[] availableProfiles;
-
-    /**
-     * The current selected profile from the agent
-     */
-    private AuthProfile selectedProfile;
-
-    /**
-     * Auth Response constructor
+     * Refresh Response constructor
      *
      * @param accessToken
-     *            The access token
+     *            The access token (not the same as the one given by the request)
      * @param clientToken
      *            The client token (same as the one given by the request)
-     * @param availableProfiles
-     *            All available profiles
-     * @param selectedProfile
-     *            The current selected profile from the agent
      */
-    public AuthResponse(String accessToken, String clientToken, AuthProfile[] availableProfiles, AuthProfile selectedProfile) {
+    public RefreshResponse(String accessToken, String clientToken) {
         this.accessToken = accessToken;
         this.clientToken = clientToken;
-        this.availableProfiles = availableProfiles;
-        this.selectedProfile = selectedProfile;
     }
 
     /**
-     * Returns the access token
+     * Returns the access token (not the same as the one given by the request)
      *
      * @return The access token
      */
     public String getAccessToken() {
-        return this.accessToken;
+        return accessToken;
     }
 
     /**
@@ -82,25 +64,7 @@ public class AuthResponse {
      * @return The client token
      */
     public String getClientToken() {
-        return this.clientToken;
-    }
-
-    /**
-     * Returns the available profiles
-     *
-     * @return The available profiles
-     */
-    public AuthProfile[] getAvailableProfiles() {
-        return this.availableProfiles;
-    }
-
-    /**
-     * Returns the selected profile from the agent
-     *
-     * @return The selected profile
-     */
-    public AuthProfile getSelectedProfile() {
-        return this.selectedProfile;
+        return clientToken;
     }
 
 }
