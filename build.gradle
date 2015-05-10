@@ -10,3 +10,11 @@ sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
 compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile 'com.google.code.gson:gson:2.3.1'
+}
