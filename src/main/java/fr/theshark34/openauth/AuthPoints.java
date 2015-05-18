@@ -33,12 +33,7 @@ public class AuthPoints {
     /**
      * The Mojang auth server auth points
      */
-    public static final AuthPoints MOJANG_AUTH_POINTS = new AuthPoints("authenticate", "refresh", "validate", "signout", "invalidate");
-
-    /**
-     * The OpenAuth auth server auth points
-     */
-    public static final AuthPoints OPENAUTH_AUTH_POINTS = new AuthPoints("authenticate.php", "refresh.php", "validate.php", "signout.php", "invalidate.php");
+    public static final AuthPoints NORMAL_AUTH_POINTS = new AuthPoints("authenticate", "refresh", "validate", "signout", "invalidate");
 
     /**
      * The server authenticate point
