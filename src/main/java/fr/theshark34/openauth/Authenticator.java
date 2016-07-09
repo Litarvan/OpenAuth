@@ -159,12 +159,11 @@ public class Authenticator {
         try {
             response = sendPostRequest(this.authURL + authPoint, gson.toJson(request));
         } catch (IOException e) {
-            AuthError errorModel = gson.fromJson(e.getMessage(), AuthError.class);
+            throw new AuthenticationException(new AuthError("Can't send the request : " + e.getClass().getName(), e.getMessage(), "Unknown"));
+        }
 
-            if(errorModel == null)
-                errorModel = new AuthError("", e.getMessage(), "");
-
-            throw new AuthenticationException(errorModel);
+        if (response != null && !response.startsWith("{")) {
+            throw new AuthenticationException(new AuthError("Internal server error", response, "Unknown"));
         }
 
         if(model != null)
