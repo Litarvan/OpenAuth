@@ -33,10 +33,10 @@ import java.net.URL;
  * The Authenticator
  *
  * <p>
- *     The mainc class of the lib, use it to authenticate a user !
+ *     The main class of the lib, use it to authenticate a user !
  * </p>
  *
- * @version 1.0.0-SNAPSHOT
+ * @version 1.0.1-SNAPSHOT
  * @author TheShark34
  */
 public class Authenticator {
