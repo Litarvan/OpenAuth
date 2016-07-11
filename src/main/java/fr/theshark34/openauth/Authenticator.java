@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 TheShark34
+ * Copyright 2015-2016 Adrien 'Litarvan' Navratil
  *
  * This file is part of OpenAuth.
 
@@ -36,8 +36,8 @@ import java.net.URL;
  *     The main class of the lib, use it to authenticate a user !
  * </p>
  *
- * @version 1.0.1-SNAPSHOT
- * @author TheShark34
+ * @version 1.0.2-SNAPSHOT
+ * @author Litarvan
  */
 public class Authenticator {
 
@@ -205,13 +205,13 @@ public class Authenticator {
             return null;
         }
 
-        InputStream is = null;
+        InputStream is;
         if(responseCode == 200)
             is = connection.getInputStream();
         else
             is = connection.getErrorStream();
 
-        String response = null;
+        String response;
 
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         response = br.readLine();
@@ -222,10 +222,7 @@ public class Authenticator {
         }
         connection.disconnect();
 
-        if(responseCode == 200)
-            return response;
-
-        throw new IOException(response);
+        return response;
     }
 
 }
