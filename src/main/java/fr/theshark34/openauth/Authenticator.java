@@ -33,10 +33,10 @@ import java.net.URL;
  * The Authenticator
  *
  * <p>
- *     The mainc class of the lib, use it to authenticate a user !
+ *     The main class of the lib, use it to authenticate a user !
  * </p>
  *
- * @version 1.0.0-SNAPSHOT
+ * @version 1.0.1-SNAPSHOT
  * @author TheShark34
  */
 public class Authenticator {
@@ -159,12 +159,11 @@ public class Authenticator {
         try {
             response = sendPostRequest(this.authURL + authPoint, gson.toJson(request));
         } catch (IOException e) {
-            AuthError errorModel = gson.fromJson(e.getMessage(), AuthError.class);
+            throw new AuthenticationException(new AuthError("Can't send the request : " + e.getClass().getName(), e.getMessage(), "Unknown"));
+        }
 
-            if(errorModel == null)
-                errorModel = new AuthError("", e.getMessage(), "");
-
-            throw new AuthenticationException(errorModel);
+        if (response != null && !response.startsWith("{")) {
+            throw new AuthenticationException(new AuthError("Internal server error", response, "Unknown"));
         }
 
         if(model != null)

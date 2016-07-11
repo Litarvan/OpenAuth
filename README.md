@@ -1,5 +1,7 @@
 ![OpenAuth Logo](http://image.noelshack.com/fichiers/2015/20/1431453946-banierreoauth.png)
 
+# Inspired from [Kronos666](http://github.com/Kronos666) work !
+
 # How to use it
 Use it to connect to any yggdrasil server (The Mojang official auth server, or any openauth server, and maybe other servers !)
 
