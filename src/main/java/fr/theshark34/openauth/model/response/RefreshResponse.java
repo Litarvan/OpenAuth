@@ -50,6 +50,10 @@ public class RefreshResponse {
      *            The access token (not the same as the one given by the request)
      * @param clientToken
      *            The client token (same as the one given by the request)
+     * @param selectedProfile
+     *            The profile selected (depending of the sent AuthAgent) containing
+     *            more information about the agent (the game) selected, like the
+     *            username for Minecraft
      */
     public RefreshResponse(String accessToken, String clientToken, AuthProfile selectedProfile) {
         this.accessToken = accessToken;

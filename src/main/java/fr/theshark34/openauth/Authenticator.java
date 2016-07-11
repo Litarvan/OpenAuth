@@ -61,6 +61,9 @@ public class Authenticator {
      *
      * @param authURL
      *            The auth server URL
+     *
+     * @param authPoints
+     *            The URIs of the multiple requests
      */
     public Authenticator(String authURL, AuthPoints authPoints) {
         this.authURL = authURL;
@@ -78,6 +81,10 @@ public class Authenticator {
      *            User mojang account password
      * @param clientToken
      *            The client token (optional, like a key for the access token)
+     *
+     * @throws AuthenticationException If the server returned an error as a JSON
+     *
+     * @return The response sent by the server (parsed from a JSON)
      */
     public AuthResponse authenticate(AuthAgent agent, String username, String password, String clientToken) throws AuthenticationException {
         AuthRequest request = new AuthRequest(agent, username, password, clientToken);
@@ -92,6 +99,10 @@ public class Authenticator {
      *            The saved access token
      * @param clientToken
      *            The saved client token (need to be the same used when authenticated to get the acces token)
+     *
+     * @throws AuthenticationException If the server returned an error as a JSON
+     *
+     * @return The response sent by the server (parsed from a JSON)
      */
     public RefreshResponse refresh(String accessToken, String clientToken) throws AuthenticationException {
         RefreshRequest request = new RefreshRequest(accessToken, clientToken);
@@ -108,6 +119,8 @@ public class Authenticator {
      *
      * @param accessToken
      *            The access token to check
+     *
+     * @throws AuthenticationException If the server returned an error as a JSON
      */
     public void validate(String accessToken) throws AuthenticationException {
         ValidateRequest request = new ValidateRequest(accessToken);
@@ -121,6 +134,8 @@ public class Authenticator {
      *            User mojang account name
      * @param password
      *            User mojang account password
+     *
+     * @throws AuthenticationException If the server returned an error as a JSON
      */
     public void signout(String username, String password) throws AuthenticationException {
         SignoutRequest request = new SignoutRequest(username, password);
@@ -134,6 +149,8 @@ public class Authenticator {
      *            Valid access token to invalidate
      * @param clientToken
      *            Client token used when authenticated to get the access token
+     *
+     * @throws AuthenticationException If the server returned an error as a JSON
      */
     public void invalidate(String accessToken, String clientToken) throws AuthenticationException {
         InvalidateRequest request = new InvalidateRequest(accessToken, clientToken);
@@ -151,6 +168,9 @@ public class Authenticator {
      *            The auth point of the request
      * @throws AuthenticationException
      *            If it returned an error or the request failed
+     *
+     * @throws AuthenticationException If the server returned an error as a JSON
+     *
      * @return Instance of the given reponse model if it not null
      */
     private Object sendRequest(Object request, Class<?> model, String authPoint) throws AuthenticationException {
