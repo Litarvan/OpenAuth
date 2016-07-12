@@ -36,7 +36,7 @@ import java.net.URL;
  *     The main class of the lib, use it to authenticate a user !
  * </p>
  *
- * @version 1.0.2-SNAPSHOT
+ * @version 1.0.3-SNAPSHOT
  * @author Litarvan
  */
 public class Authenticator {
@@ -175,15 +175,12 @@ public class Authenticator {
      */
     private Object sendRequest(Object request, Class<?> model, String authPoint) throws AuthenticationException {
         Gson gson = new Gson();
-        String response = null;
+        String response;
+
         try {
             response = sendPostRequest(this.authURL + authPoint, gson.toJson(request));
         } catch (IOException e) {
             throw new AuthenticationException(new AuthError("Can't send the request : " + e.getClass().getName(), e.getMessage(), "Unknown"));
-        }
-
-        if (response != null && !response.startsWith("{")) {
-            throw new AuthenticationException(new AuthError("Internal server error", response, "Unknown"));
         }
 
         if(model != null)
@@ -201,9 +198,12 @@ public class Authenticator {
      *            The json to send
      * @throws IOException
      *            If it failed
+     *
+     * @throws AuthenticationException If the request returned an error JSON or not a JSON
+     *
      * @return The request response
      */
-    private String sendPostRequest(String url, String json) throws IOException {
+    private String sendPostRequest(String url, String json) throws AuthenticationException, IOException {
         URL serverURL = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) serverURL.openConnection();
         connection.setRequestMethod("POST");
@@ -241,6 +241,18 @@ public class Authenticator {
             e.printStackTrace();
         }
         connection.disconnect();
+
+        while (response != null && response.startsWith("\uFEFF"))
+            response = response.substring(1);
+
+        if (responseCode != 200) {
+            Gson gson = new Gson();
+
+            if (response != null && !response.startsWith("{"))
+                throw new AuthenticationException(new AuthError("Internal server error", response, "Remote"));
+
+            throw new AuthenticationException(gson.fromJson(response, AuthError.class));
+        }
 
         return response;
     }

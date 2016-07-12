@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 group = 'fr.theshark34.openauth'
-version = '1.0.2-SNAPSHOT'
+version = '1.0.3-SNAPSHOT'
 archivesBaseName = 'openauth'
 
 sourceCompatibility = 1.6
