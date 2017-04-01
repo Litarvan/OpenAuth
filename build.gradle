@@ -4,7 +4,7 @@ apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
 group = 'fr.theshark34.openauth'
-version = '1.0.4-SNAPSHOT'
+version = '1.0.4'
 archivesBaseName = 'openauth'
 
 sourceCompatibility = 1.6
