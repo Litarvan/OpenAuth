@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-group = 'fr.theshark34.openauth'
+group = 'fr.litarvan.openauth'
 version = '1.0.4'
 archivesBaseName = 'openauth'
 

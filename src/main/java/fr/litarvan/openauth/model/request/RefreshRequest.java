@@ -16,33 +16,41 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth.model.request;
+package fr.litarvan.openauth.model.request;
 
 /**
- * JSON Model of an validate request
+ * JSON model of a refresh request
  *
- * @version 1.0.0-SNAPSHOT
- * @author TheShark34
+ * @version 1.0.4
+ * @author Litarvan
  */
-public class ValidateRequest {
+public class RefreshRequest {
 
     /**
-     * The access token that you want to validate
+     * The saved access token that you want to refresh
      */
     private String accessToken;
 
     /**
-     * Validate Request constructor
+     * The saved client token associated with the access token
+     */
+    private String clientToken;
+
+    /**
+     * Refresh Request constructor
      *
      * @param accessToken
-     *            The access token that you want to validate
+     *            The saved access token that you want to refresh
+     * @param clientToken
+     *            The saved client token associated with the access token
      */
-    public ValidateRequest(String accessToken) {
+    public RefreshRequest(String accessToken, String clientToken) {
         this.accessToken = accessToken;
+        this.clientToken = clientToken;
     }
 
     /**
-     * Sets a new access token
+     * Sets a new access token (That you want to refresh)
      *
      * @param accessToken
      *            The new access token
@@ -57,7 +65,26 @@ public class ValidateRequest {
      * @return The given access token
      */
     public String getAccessToken() {
-        return accessToken;
+        return this.accessToken;
+    }
+
+    /**
+     * Sets a new client token (Need to be associated with the access token)
+     *
+     * @param clientToken
+     *            The new client token
+     */
+    public void setClientToken(String clientToken) {
+        this.clientToken = clientToken;
+    }
+
+    /**
+     * Returns the client token (Given by the constructor or the setter)
+     *
+     * @return The given client token
+     */
+    public String getClientToken() {
+        return this.clientToken;
     }
 
 }

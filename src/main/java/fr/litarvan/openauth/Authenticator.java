@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth;
+package fr.litarvan.openauth;
 
 import com.google.gson.Gson;
-import fr.theshark34.openauth.model.AuthAgent;
-import fr.theshark34.openauth.model.AuthError;
-import fr.theshark34.openauth.model.request.*;
-import fr.theshark34.openauth.model.response.AuthResponse;
-import fr.theshark34.openauth.model.response.RefreshResponse;
+import fr.litarvan.openauth.model.AuthAgent;
+import fr.litarvan.openauth.model.request.*;
+import fr.litarvan.openauth.model.response.*;
+import fr.litarvan.openauth.model.AuthError;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -36,7 +35,7 @@ import java.net.URL;
  *     The main class of the lib, use it to authenticate a user !
  * </p>
  *
- * @version 1.0.3-SNAPSHOT
+ * @version 1.0.4
  * @author Litarvan
  */
 public class Authenticator {

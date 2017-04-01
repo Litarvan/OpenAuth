@@ -16,41 +16,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth.model.request;
+package fr.litarvan.openauth.model.request;
 
 /**
- * JSON model of a refresh request
+ * JSON Model of an validate request
  *
- * @version 1.0.0-SNAPSHOT
- * @author TheShark34
+ * @version 1.0.4
+ * @author Litarvan
  */
-public class RefreshRequest {
+public class ValidateRequest {
 
     /**
-     * The saved access token that you want to refresh
+     * The access token that you want to validate
      */
     private String accessToken;
 
     /**
-     * The saved client token associated with the access token
-     */
-    private String clientToken;
-
-    /**
-     * Refresh Request constructor
+     * Validate Request constructor
      *
      * @param accessToken
-     *            The saved access token that you want to refresh
-     * @param clientToken
-     *            The saved client token associated with the access token
+     *            The access token that you want to validate
      */
-    public RefreshRequest(String accessToken, String clientToken) {
+    public ValidateRequest(String accessToken) {
         this.accessToken = accessToken;
-        this.clientToken = clientToken;
     }
 
     /**
-     * Sets a new access token (That you want to refresh)
+     * Sets a new access token
      *
      * @param accessToken
      *            The new access token
@@ -65,26 +57,7 @@ public class RefreshRequest {
      * @return The given access token
      */
     public String getAccessToken() {
-        return this.accessToken;
-    }
-
-    /**
-     * Sets a new client token (Need to be associated with the access token)
-     *
-     * @param clientToken
-     *            The new client token
-     */
-    public void setClientToken(String clientToken) {
-        this.clientToken = clientToken;
-    }
-
-    /**
-     * Returns the client token (Given by the constructor or the setter)
-     *
-     * @return The given client token
-     */
-    public String getClientToken() {
-        return this.clientToken;
+        return accessToken;
     }
 
 }

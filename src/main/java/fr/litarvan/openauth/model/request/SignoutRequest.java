@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth.model.request;
+package fr.litarvan.openauth.model.request;
 
 /**
  * JSON Model of an signout request
  *
- * @version 1.0.0-SNAPSHOT
- * @author TheShark34
+ * @version 1.0.4
+ * @author Litarvan
  */
 public class SignoutRequest {
 

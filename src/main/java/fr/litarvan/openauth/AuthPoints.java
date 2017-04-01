@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OpenAuth.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.theshark34.openauth;
+package fr.litarvan.openauth;
 
 /**
  * The server Auth Points
@@ -25,8 +25,8 @@ package fr.theshark34.openauth;
  *     Contains the pages url of a server
  * </p>
  *
- * @version 1.0.0-SNAPSHOT
- * @author TheShark34
+ * @version 1.0.4
+ * @author Litarvan
  */
 public class AuthPoints {
 
