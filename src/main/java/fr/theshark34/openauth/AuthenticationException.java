@@ -40,6 +40,7 @@ public class AuthenticationException extends Exception {
      *            The given JSON model instance of the error
      */
     public AuthenticationException(AuthError model) {
+        super(model.getErrorMessage());
         this.model = model;
     }
 
@@ -51,5 +52,4 @@ public class AuthenticationException extends Exception {
     public AuthError getErrorModel() {
         return model;
     }
-
 }

@@ -1,9 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'maven-publish'
 
 group = 'fr.theshark34.openauth'
-version = '1.0.3-SNAPSHOT'
+version = '1.0.4-SNAPSHOT'
 archivesBaseName = 'openauth'
 
 sourceCompatibility = 1.6
@@ -16,5 +17,17 @@ repositories {
 }
 
 dependencies {
-	compile 'com.google.code.gson:gson:2.3.1'
+	compile 'com.google.code.gson:gson:2.8.0'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId group
+            artifactId archivesBaseName
+            version = version
+
+            from components.java
+        }
+    }
 }

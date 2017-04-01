@@ -210,7 +210,7 @@ public class Authenticator {
 
         // Sending post request
         connection.setDoOutput(true);
-        connection.addRequestProperty("Content-Type", "application/json");
+        connection.addRequestProperty("Content-Type", "application/json;charset=utf-8");
         DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
         wr.writeBytes(json);
         wr.flush();
