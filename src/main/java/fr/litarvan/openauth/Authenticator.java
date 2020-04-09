@@ -203,15 +203,18 @@ public class Authenticator {
      * @return The request response
      */
     private String sendPostRequest(String url, String json) throws AuthenticationException, IOException {
+        byte[] jsonBytes = json.getBytes("UTF-8");
         URL serverURL = new URL(url);
-        HttpURLConnection connection = (HttpURLConnection) serverURL.openConnection();
+        HttpsURLConnection connection = (HttpsURLConnection) serverURL.openConnection();
         connection.setRequestMethod("POST");
 
         // Sending post request
         connection.setDoOutput(true);
-        connection.addRequestProperty("Content-Type", "application/json;charset=utf-8");
+        connection.setRequestProperty("Accept-Charset", "UTF-8");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Content-Length", String.valueOf(jsonBytes.length));
         DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-        wr.writeBytes(json);
+        wr.write(jsonBytes, 0, jsonBytes.length);
         wr.flush();
         wr.close();
 
