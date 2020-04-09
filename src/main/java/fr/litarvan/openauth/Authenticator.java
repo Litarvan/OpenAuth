@@ -25,7 +25,7 @@ import fr.litarvan.openauth.model.response.*;
 import fr.litarvan.openauth.model.AuthError;
 
 import java.io.*;
-import javax.net.ssl.HttpsURLConnection;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
@@ -205,7 +205,7 @@ public class Authenticator {
     private String sendPostRequest(String url, String json) throws AuthenticationException, IOException {
         byte[] jsonBytes = json.getBytes("UTF-8");
         URL serverURL = new URL(url);
-        HttpsURLConnection connection = (HttpsURLConnection) serverURL.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) serverURL.openConnection();
         connection.setRequestMethod("POST");
 
         // Sending post request
