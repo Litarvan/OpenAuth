@@ -25,7 +25,7 @@ import fr.litarvan.openauth.model.response.*;
 import fr.litarvan.openauth.model.AuthError;
 
 import java.io.*;
-import java.net.HttpURLConnection;
+import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
 
 /**
