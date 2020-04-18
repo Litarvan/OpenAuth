@@ -27,6 +27,7 @@ import fr.litarvan.openauth.model.AuthError;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 /**
  * The Authenticator
@@ -211,7 +212,7 @@ public class Authenticator {
         // Sending post request
         connection.setDoOutput(true);
         connection.setRequestProperty("Accept-Charset", "UTF-8");
-        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
         connection.setRequestProperty("Content-Length", String.valueOf(jsonBytes.length));
         DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
         wr.write(jsonBytes, 0, jsonBytes.length);
@@ -235,7 +236,7 @@ public class Authenticator {
 
         String response;
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        BufferedReader br = new BufferedReader(new InputStreamReader(is), Charset.forName("UTF-8"));
         response = br.readLine();
         try {
             br.close();
