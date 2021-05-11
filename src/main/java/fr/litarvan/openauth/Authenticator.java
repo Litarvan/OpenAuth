@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2016 Adrien 'Litarvan' Navratil
+ * Copyright 2015-2021 Adrien 'Litarvan' Navratil
  *
  * This file is part of OpenAuth.
 
@@ -27,7 +27,7 @@ import fr.litarvan.openauth.model.AuthError;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * The Authenticator
@@ -204,7 +204,7 @@ public class Authenticator {
      * @return The request response
      */
     private String sendPostRequest(String url, String json) throws AuthenticationException, IOException {
-        byte[] jsonBytes = json.getBytes("UTF-8");
+        byte[] jsonBytes = json.getBytes(StandardCharsets.UTF_8);
         URL serverURL = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) serverURL.openConnection();
         connection.setRequestMethod("POST");
@@ -236,7 +236,7 @@ public class Authenticator {
 
         String response;
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(is), Charset.forName("UTF-8"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
         response = br.readLine();
         try {
             br.close();

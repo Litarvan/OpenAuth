@@ -1,14 +1,12 @@
 apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
 group = 'fr.litarvan'
-version = '1.0.4'
+version = '1.1.0'
 archivesBaseName = 'openauth'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 compileJava.options.encoding = 'UTF-8'
 
@@ -17,7 +15,7 @@ repositories {
 }
 
 dependencies {
-	compile 'com.google.code.gson:gson:2.8.0'
+	implementation 'com.google.code.gson:gson:2.8.6'
 }
 
 publishing {
@@ -30,4 +28,14 @@ publishing {
             from components.java
         }
     }
+}
+
+task fatjar(type: Jar) {
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    with jar
 }

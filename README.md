@@ -1,8 +1,29 @@
-![OpenAuth Logo](http://image.noelshack.com/fichiers/2015/20/1431453946-banierreoauth.png)
+![OpenAuth Logo](https://github.com/Litarvan/OpenAuth/raw/master/banner.png)
 
-# Inspired from [Kronos666](http://github.com/Kronos666) work !
+> Minecraft authentication library which supports both Mojang and Microsoft accounts, or even custom servers
 
-# How to use it
+# Credits
+
+This project would have not existed without the work from:
+
+ - [Kronos666](https://github.com/Kronos666) for Mojang authentication
+ - [Alexis Bize](https://github.com/Alexis-Bize) for Microsoft authentication
+
+# How to use it (Microsoft)
+
+```java
+MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+MicrosoftAuthResult result = authenticator.loginWithCredentials("email", "password");
+      // Or using a webview: authenticator.loginWithWebView();
+  // Or using refresh token: authenticator.loginWithRefreshToken("refresh token");
+   // Or using your own way: authenticator.loginWithTokens("access token", "refresh token");
+        
+System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
+```
+
+You can save the refresh token (`result.getRefreshToken()`) to log back the user silently later.
+
+# How to use it (Mojang)
 Use it to connect to any yggdrasil server (The Mojang official auth server, or any openauth server, and maybe other servers !)
 
 ## Init it

@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 .gradle/
 .idea/
 
 build/
-
-*.iws
-*.ipr
-*.iml
