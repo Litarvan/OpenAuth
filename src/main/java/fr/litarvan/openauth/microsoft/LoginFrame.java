@@ -24,6 +24,8 @@ import javafx.scene.Scene;
 import javafx.scene.web.WebView;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.concurrent.CompletableFuture;
 
 /*
@@ -50,8 +52,20 @@ public class LoginFrame extends JFrame
 
     public CompletableFuture<String> start(String url)
     {
+        if (this.future != null) {
+            return this.future;
+        }
+
+        this.future = new CompletableFuture<>();
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                future.completeExceptionally(new MicrosoftAuthenticationException("User closed the authentication window"));
+            }
+        });
+
         Platform.runLater(() -> this.init(url));
-        return this.future = new CompletableFuture<>();
+        return this.future;
     }
 
     protected void init(String url)

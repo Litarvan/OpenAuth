@@ -32,8 +32,8 @@ public class MicrosoftAuthenticationException extends Exception
         super("I/O exception thrown during Microsoft HTTP requests", cause);
     }
 
-    public MicrosoftAuthenticationException(Exception cause)
+    public MicrosoftAuthenticationException(Throwable cause)
     {
-        super("Exception thrown during login webview frame lifecycle", cause);
+        super(cause);
     }
 }
