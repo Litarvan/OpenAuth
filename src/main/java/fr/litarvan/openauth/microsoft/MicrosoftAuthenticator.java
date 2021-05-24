@@ -33,6 +33,8 @@ import java.net.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -126,6 +128,9 @@ public class MicrosoftAuthenticator
 
     /**
      * Logs in a player using a webview to display Microsoft login page.
+     * <b>This function blocks the current thread until the process is finished; this can cause your application to
+     * freeze. When calling from the JavaFX thread or any thread which must not be blocked, use
+     * {@link #loginWithAsyncWebview()}</b>
      *
      * @return The player Minecraft profile
      *
@@ -133,14 +138,30 @@ public class MicrosoftAuthenticator
      */
     public MicrosoftAuthResult loginWithWebview() throws MicrosoftAuthenticationException
     {
-        String url = String.format("%s?%s", MICROSOFT_AUTHORIZATION_ENDPOINT, http.buildParams(getLoginParams()));
-        LoginFrame frame = new LoginFrame();
-
         try {
-            return loginWithTokens(extractTokens(frame.start(url).get()));
+            return loginWithAsyncWebview().get();
         } catch (InterruptedException | ExecutionException e) {
             throw new MicrosoftAuthenticationException(e);
         }
+    }
+    
+    /**
+     * Logs in a player using a webview to display Microsoft login page. This function does not block the current thread.
+     *
+     * @return A future resolved by the player Minecraft profile
+     */
+    public CompletableFuture<MicrosoftAuthResult> loginWithAsyncWebview()
+    {
+        String url = String.format("%s?%s", MICROSOFT_AUTHORIZATION_ENDPOINT, http.buildParams(getLoginParams()));
+        LoginFrame frame = new LoginFrame();
+    
+        return frame.start(url).thenApplyAsync(result -> {
+            try {
+                return loginWithTokens(extractTokens(result));
+            } catch (MicrosoftAuthenticationException e) {
+                throw new CompletionException(e);
+            }
+        });
     }
 
     /**
