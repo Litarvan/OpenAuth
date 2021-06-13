@@ -8,6 +8,7 @@ This project would have not existed without the work from:
 
  - [Kronos666](https://github.com/Kronos666) for Mojang authentication
  - [Alexis Bize](https://github.com/Alexis-Bize) for Microsoft authentication
+ - [Mickaël Guessant](https://github.com/mguessan) for Microsoft webview authentication
 
 # How to use it (Microsoft)
 
