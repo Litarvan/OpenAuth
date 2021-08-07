@@ -72,6 +72,31 @@ public class LoginFrame extends JFrame
 
     protected void init(String url)
     {
+        try {
+            overrideFactory();
+        } catch (Throwable ignored) {
+            // If the handler was already defined, we can safely ignore this.
+            // If it isn't the right one, we can't override it anyway.
+        }
+
+        WebView webView = new WebView();
+        JFXPanel content = (JFXPanel) this.getContentPane();
+
+        content.setScene(new Scene(webView, this.getWidth(), this.getHeight()));
+
+        webView.getEngine().locationProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.contains("access_token")) {
+                this.setVisible(false);
+                this.future.complete(newValue);
+            }
+        });
+        webView.getEngine().load(url);
+
+        this.setVisible(true);
+    }
+
+    protected static void overrideFactory()
+    {
         URL.setURLStreamHandlerFactory(protocol -> {
             if ("https".equals(protocol)) {
                 return new Handler()
@@ -88,13 +113,13 @@ public class LoginFrame extends JFrame
                         HttpURLConnection connection = (HttpURLConnection) super.openConnection(url, proxy);
 
                         if (("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/oauth2/authorize"))
-                                || ("login.live.com".equals(url.getHost()) && "/oauth20_authorize.srf".equals(url.getPath()))
-                                || ("login.live.com".equals(url.getHost()) && "/ppsecure/post.srf".equals(url.getPath()))
-                                || ("login.microsoftonline.com".equals(url.getHost()) && "/login.srf".equals(url.getPath()))
-                                || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/login"))
-                                || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/SAS/ProcessAuth"))
-                                || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/federation/oauth2"))
-                                || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/oauth2/v2.0/authorize"))) {
+                            || ("login.live.com".equals(url.getHost()) && "/oauth20_authorize.srf".equals(url.getPath()))
+                            || ("login.live.com".equals(url.getHost()) && "/ppsecure/post.srf".equals(url.getPath()))
+                            || ("login.microsoftonline.com".equals(url.getHost()) && "/login.srf".equals(url.getPath()))
+                            || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/login"))
+                            || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/SAS/ProcessAuth"))
+                            || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/federation/oauth2"))
+                            || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/oauth2/v2.0/authorize"))) {
                             return new MicrosoftPatchedHttpURLConnection(url, connection);
                         }
 
@@ -105,20 +130,5 @@ public class LoginFrame extends JFrame
 
             return null;
         });
-
-        WebView webView = new WebView();
-        JFXPanel content = (JFXPanel) this.getContentPane();
-
-        content.setScene(new Scene(webView, this.getWidth(), this.getHeight()));
-
-        webView.getEngine().locationProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.contains("access_token")) {
-                this.setVisible(false);
-                this.future.complete(newValue);
-            }
-        });
-        webView.getEngine().load(url);
-
-        this.setVisible(true);
     }
 }
