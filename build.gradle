@@ -10,7 +10,7 @@ version = '1.1.2'
 archivesBaseName = 'openauth'
 
 sourceCompatibility = 8
-targetCompatibility = 8
+targetCompatibility = 11
 
 compileJava.options.encoding = 'UTF-8'
 
