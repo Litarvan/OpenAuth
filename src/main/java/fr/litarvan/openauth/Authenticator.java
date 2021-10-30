@@ -88,6 +88,7 @@ public class Authenticator {
      */
     public AuthResponse authenticate(AuthAgent agent, String username, String password, String clientToken) throws AuthenticationException {
         AuthRequest request = new AuthRequest(agent, username, password, clientToken);
+        System.out.println("Authenticate");
         return (AuthResponse) sendRequest(request, AuthResponse.class, authPoints.getAuthenticatePoint());
     }
 
