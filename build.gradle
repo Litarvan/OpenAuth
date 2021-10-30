@@ -9,7 +9,7 @@ group = 'fr.litarvan'
 version = '1.1.2'
 archivesBaseName = 'openauth'
 
-sourceCompatibility = 8
+sourceCompatibility = 11
 targetCompatibility = 11
 
 compileJava.options.encoding = 'UTF-8'
