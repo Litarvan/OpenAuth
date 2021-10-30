@@ -45,7 +45,7 @@ public class LoginFrame extends JFrame
 
     public LoginFrame()
     {
-        this.setTitle("Connexion à Microsoft");
+        this.setTitle("Microsoft Login");
         this.setSize(750, 750);
         this.setLocationRelativeTo(null);
 
