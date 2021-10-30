@@ -49,7 +49,7 @@ public class LoginFrame extends JFrame
         this.setSize(750, 750);
         this.setLocationRelativeTo(null);
 
-        this.setContentPane(new JFXPanel());
+        this.setContentPane(new JPanel());
     }
 
     public CompletableFuture<String> start(String url)

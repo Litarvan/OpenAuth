@@ -1,3 +1,8 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+}
+
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
@@ -5,8 +10,8 @@ group = 'fr.litarvan'
 version = '1.1.2'
 archivesBaseName = 'openauth'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 16
+targetCompatibility = 16
 
 compileJava.options.encoding = 'UTF-8'
 
@@ -16,6 +21,7 @@ repositories {
 
 dependencies {
 	implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.openjfx:javafx:16'
 }
 
 publishing {
@@ -28,6 +34,12 @@ publishing {
             from components.java
         }
     }
+}
+
+
+javafx {
+    version = "16"
+    modules = [ 'javafx.controls', 'javafx.web', "javafx.swing" ]
 }
 
 task fatjar(type: Jar) {
