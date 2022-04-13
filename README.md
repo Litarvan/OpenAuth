@@ -10,6 +10,8 @@ This project would have not existed without the work from:
  - [Alexis Bize](https://github.com/Alexis-Bize) for Microsoft authentication
  - [Mickaël Guessant](https://github.com/mguessan) for Microsoft webview authentication
 
+## Importing library
+
 # Gradle
 ```gradle
 repositories {
@@ -39,6 +41,9 @@ dependencies {
     </dependency>
 </dependencies>
 ```
+
+# Other
+Use the JAR file from releases.
 
 # How to use it (Microsoft)
 
