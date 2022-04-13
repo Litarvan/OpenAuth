@@ -10,6 +10,36 @@ This project would have not existed without the work from:
  - [Alexis Bize](https://github.com/Alexis-Bize) for Microsoft authentication
  - [Mickaël Guessant](https://github.com/mguessan) for Microsoft webview authentication
 
+# Gradle
+```gradle
+repositories {
+    maven {
+        url 'https://litarvan.github.io/maven'
+    }
+}
+
+dependencies {
+    implementation 'fr.litarvan:openauth:1.1.2'
+}
+```
+
+# Maven
+```xml
+<repositories>
+    <repositories>
+        <id>litarvan</id>
+        <url>https://litarvan.github.io/maven</url>
+    </repositories>
+</repositories>
+<dependencies>
+    <dependency>
+        <groupId>fr.litarvan</groupId>
+        <artifactId>openauth</artifactId>
+        <version>1.1.2</version>
+    </dependency>
+</dependencies>
+```
+
 # How to use it (Microsoft)
 
 ```java
