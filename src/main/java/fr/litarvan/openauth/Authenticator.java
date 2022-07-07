@@ -20,9 +20,10 @@ package fr.litarvan.openauth;
 
 import com.google.gson.Gson;
 import fr.litarvan.openauth.model.AuthAgent;
-import fr.litarvan.openauth.model.request.*;
-import fr.litarvan.openauth.model.response.*;
 import fr.litarvan.openauth.model.AuthError;
+import fr.litarvan.openauth.model.request.*;
+import fr.litarvan.openauth.model.response.AuthResponse;
+import fr.litarvan.openauth.model.response.RefreshResponse;
 
 import java.io.*;
 import java.net.HttpURLConnection;

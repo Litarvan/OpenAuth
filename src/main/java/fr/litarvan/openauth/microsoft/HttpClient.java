@@ -21,7 +21,9 @@ package fr.litarvan.openauth.microsoft;
 import com.google.gson.Gson;
 
 import java.io.*;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
