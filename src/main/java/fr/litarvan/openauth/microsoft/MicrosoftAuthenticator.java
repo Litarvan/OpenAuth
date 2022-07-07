@@ -25,10 +25,13 @@ package fr.litarvan.openauth.microsoft;
  * https://github.com/XboxReplay/xboxlive-auth
  */
 
-import fr.litarvan.openauth.microsoft.model.request.*;
+import fr.litarvan.openauth.microsoft.model.request.MinecraftLoginRequest;
+import fr.litarvan.openauth.microsoft.model.request.XSTSAuthorizationProperties;
+import fr.litarvan.openauth.microsoft.model.request.XboxLiveLoginProperties;
+import fr.litarvan.openauth.microsoft.model.request.XboxLoginRequest;
 import fr.litarvan.openauth.microsoft.model.response.*;
 
-import java.io.*;
+import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.Arrays;
 import java.util.HashMap;
