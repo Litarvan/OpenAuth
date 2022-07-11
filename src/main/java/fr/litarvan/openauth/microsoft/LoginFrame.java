@@ -22,13 +22,10 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
-import sun.net.www.protocol.https.Handler;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
-import java.net.*;
 import java.util.concurrent.CompletableFuture;
 
 /*
@@ -72,13 +69,6 @@ public class LoginFrame extends JFrame
 
     protected void init(String url)
     {
-        try {
-            overrideFactory();
-        } catch (Throwable ignored) {
-            // If the handler was already defined, we can safely ignore this.
-            // If it isn't the right one, we can't override it anyway.
-        }
-
         WebView webView = new WebView();
         JFXPanel content = (JFXPanel) this.getContentPane();
 
@@ -93,42 +83,5 @@ public class LoginFrame extends JFrame
         webView.getEngine().load(url);
 
         this.setVisible(true);
-    }
-
-    protected static void overrideFactory()
-    {
-        URL.setURLStreamHandlerFactory(protocol -> {
-            if ("https".equals(protocol)) {
-                return new Handler()
-                {
-                    @Override
-                    protected URLConnection openConnection(URL url) throws IOException
-                    {
-                        return openConnection(url, null);
-                    }
-
-                    @Override
-                    protected URLConnection openConnection(URL url, Proxy proxy) throws IOException
-                    {
-                        HttpURLConnection connection = (HttpURLConnection) super.openConnection(url, proxy);
-
-                        if (("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/oauth2/authorize"))
-                            || ("login.live.com".equals(url.getHost()) && "/oauth20_authorize.srf".equals(url.getPath()))
-                            || ("login.live.com".equals(url.getHost()) && "/ppsecure/post.srf".equals(url.getPath()))
-                            || ("login.microsoftonline.com".equals(url.getHost()) && "/login.srf".equals(url.getPath()))
-                            || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/login"))
-                            || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/SAS/ProcessAuth"))
-                            || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/federation/oauth2"))
-                            || ("login.microsoftonline.com".equals(url.getHost()) && url.getPath().endsWith("/oauth2/v2.0/authorize"))) {
-                            return new MicrosoftPatchedHttpURLConnection(url, connection);
-                        }
-
-                        return connection;
-                    }
-                };
-            }
-
-            return null;
-        });
     }
 }
