@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'fr.litarvan:openauth:1.1.2'
+    implementation 'fr.litarvan:openauth:1.1.3'
 }
 ```
 
@@ -37,7 +37,7 @@ dependencies {
     <dependency>
         <groupId>fr.litarvan</groupId>
         <artifactId>openauth</artifactId>
-        <version>1.1.2</version>
+        <version>1.1.3</version>
     </dependency>
 </dependencies>
 ```
