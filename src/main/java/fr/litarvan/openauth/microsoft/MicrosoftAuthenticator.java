@@ -119,7 +119,7 @@ public class MicrosoftAuthenticator
         try {
             return loginWithTokens(extractTokens(result.getURL().toString()));
         } catch (MicrosoftAuthenticationException e) {
-            if (match("identity/confirm", http.readResponse(result)) != null) {
+            if (match("(identity/confirm)", http.readResponse(result)) != null) {
                 throw new MicrosoftAuthenticationException(
                         "User has enabled double-authentication or must allow sign-in on https://account.live.com/activity"
                 );
