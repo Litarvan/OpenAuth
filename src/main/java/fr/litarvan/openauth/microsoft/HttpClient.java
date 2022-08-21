@@ -32,7 +32,6 @@ public class HttpClient
     public static final String MIME_TYPE_JSON = "application/json";
     public static final String MIME_TYPE_URLENCODED_FORM = "application/x-www-form-urlencoded";
 
-
     private final Gson gson;
 
     public HttpClient()
