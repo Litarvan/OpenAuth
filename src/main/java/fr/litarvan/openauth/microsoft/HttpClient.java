@@ -174,7 +174,7 @@ public class HttpClient
             }
 
             try {
-                query.append(key).append('=').append(URLEncoder.encode(value, "UTF-8"));
+                query.append(key).append('=').append(URLEncoder.encode(value, StandardCharsets.UTF_8.name()));
             } catch (UnsupportedEncodingException ignored) {
                 // Can't happen
             }
@@ -197,6 +197,8 @@ public class HttpClient
                 "Chrome/71.0.3578.98 " +
                 "Safari/537.36";
 
+        connection.setConnectTimeout(30 * 1000); // 30s
+        connection.setReadTimeout(60 * 1000); // 60s
         connection.setRequestProperty("Accept-Language", "en-US");
         connection.setRequestProperty("Accept-Charset", "UTF-8");
         connection.setRequestProperty("User-Agent", userAgent);
