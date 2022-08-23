@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -33,10 +34,16 @@ public class HttpClient
     public static final String MIME_TYPE_URLENCODED_FORM = "application/x-www-form-urlencoded";
 
     private final Gson gson;
+    private final Proxy proxy;
 
     public HttpClient()
     {
+        this(Proxy.NO_PROXY);
+    }
+    public HttpClient(Proxy proxy)
+    {
         this.gson = new Gson();
+        this.proxy = proxy;
     }
 
 
@@ -187,7 +194,7 @@ public class HttpClient
     {
         HttpURLConnection connection;
         try {
-            connection = (HttpURLConnection) new URL(url).openConnection();
+            connection = (HttpURLConnection) new URL(url).openConnection(proxy);
         } catch (IOException e) {
             throw new MicrosoftAuthenticationException(e);
         }

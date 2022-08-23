@@ -27,6 +27,7 @@ import fr.litarvan.openauth.model.response.RefreshResponse;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.Proxy;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -43,19 +44,14 @@ import java.nio.charset.StandardCharsets;
 public class Authenticator {
 
     /**
-     * The Mojang official auth server
-     */
-    public static final String MOJANG_AUTH_URL = "https://authserver.mojang.com/";
-
-    /**
      * The auth server URL
      */
-    private String authURL;
+    private final String authURL;
 
     /**
      * The server auth points
      */
-    private AuthPoints authPoints;
+    private final AuthPoints authPoints;
 
     /**
      * Create an authenticator
@@ -72,7 +68,7 @@ public class Authenticator {
     }
 
     /**
-     * Authenticates an user using his password.
+     * Authenticates a user using his password.
      *
      * @param agent
      *            The auth agent (optional)
@@ -82,14 +78,16 @@ public class Authenticator {
      *            User mojang account password
      * @param clientToken
      *            The client token (optional, like a key for the access token)
+     * @param proxy
+     *           The proxy to use (optional)
      *
      * @throws AuthenticationException If the server returned an error as a JSON
      *
      * @return The response sent by the server (parsed from a JSON)
      */
-    public AuthResponse authenticate(AuthAgent agent, String username, String password, String clientToken) throws AuthenticationException {
+    public AuthResponse authenticate(AuthAgent agent, String username, String password, String clientToken, Proxy proxy) throws AuthenticationException {
         AuthRequest request = new AuthRequest(agent, username, password, clientToken);
-        return (AuthResponse) sendRequest(request, AuthResponse.class, authPoints.getAuthenticatePoint());
+        return (AuthResponse) sendRequest(request, AuthResponse.class, authPoints.getAuthenticatePoint(), proxy);
     }
 
     /**
@@ -100,14 +98,16 @@ public class Authenticator {
      *            The saved access token
      * @param clientToken
      *            The saved client token (need to be the same used when authenticated to get the acces token)
+     * @param proxy
+     *           The proxy to use (optional)
      *
      * @throws AuthenticationException If the server returned an error as a JSON
      *
      * @return The response sent by the server (parsed from a JSON)
      */
-    public RefreshResponse refresh(String accessToken, String clientToken) throws AuthenticationException {
+    public RefreshResponse refresh(String accessToken, String clientToken, Proxy proxy) throws AuthenticationException {
         RefreshRequest request = new RefreshRequest(accessToken, clientToken);
-        return (RefreshResponse) sendRequest(request, RefreshResponse.class, authPoints.getRefreshPoint());
+        return (RefreshResponse) sendRequest(request, RefreshResponse.class, authPoints.getRefreshPoint(), proxy);
     }
 
     /**
@@ -120,12 +120,14 @@ public class Authenticator {
      *
      * @param accessToken
      *            The access token to check
+     * @param proxy
+     *           The proxy to use (optional)
      *
      * @throws AuthenticationException If the server returned an error as a JSON
      */
-    public void validate(String accessToken) throws AuthenticationException {
+    public void validate(String accessToken, Proxy proxy) throws AuthenticationException {
         ValidateRequest request = new ValidateRequest(accessToken);
-        sendRequest(request, null, authPoints.getValidatePoint());
+        sendRequest(request, null, authPoints.getValidatePoint(), proxy);
     }
 
     /**
@@ -135,12 +137,14 @@ public class Authenticator {
      *            User mojang account name
      * @param password
      *            User mojang account password
+     * @param proxy
+     *           The proxy to use (optional)
      *
      * @throws AuthenticationException If the server returned an error as a JSON
      */
-    public void signout(String username, String password) throws AuthenticationException {
+    public void signout(String username, String password, Proxy proxy) throws AuthenticationException {
         SignoutRequest request = new SignoutRequest(username, password);
-        sendRequest(request, null, authPoints.getSignoutPoint());
+        sendRequest(request, null, authPoints.getSignoutPoint(), proxy);
     }
 
     /**
@@ -150,12 +154,14 @@ public class Authenticator {
      *            Valid access token to invalidate
      * @param clientToken
      *            Client token used when authenticated to get the access token
+     * @param proxy
+     *           The proxy to use (optional)
      *
      * @throws AuthenticationException If the server returned an error as a JSON
      */
-    public void invalidate(String accessToken, String clientToken) throws AuthenticationException {
+    public void invalidate(String accessToken, String clientToken, Proxy proxy) throws AuthenticationException {
         InvalidateRequest request = new InvalidateRequest(accessToken, clientToken);
-        sendRequest(request, null, authPoints.getInvalidatePoint());
+        sendRequest(request, null, authPoints.getInvalidatePoint(), proxy);
     }
 
     /**
@@ -167,6 +173,8 @@ public class Authenticator {
      *            The model of the reponse
      * @param authPoint
      *            The auth point of the request
+     * @param proxy
+     *           The proxy to use (optional)
      * @throws AuthenticationException
      *            If it returned an error or the request failed
      *
@@ -174,12 +182,12 @@ public class Authenticator {
      *
      * @return Instance of the given reponse model if it not null
      */
-    private Object sendRequest(Object request, Class<?> model, String authPoint) throws AuthenticationException {
+    private Object sendRequest(Object request, Class<?> model, String authPoint, Proxy proxy) throws AuthenticationException {
         Gson gson = new Gson();
         String response;
 
         try {
-            response = sendPostRequest(this.authURL + authPoint, gson.toJson(request));
+            response = sendPostRequest(this.authURL + authPoint, gson.toJson(request), proxy);
         } catch (IOException e) {
             throw new AuthenticationException(new AuthError("Can't send the request : " + e.getClass().getName(), e.getMessage(), "Unknown"));
         }
@@ -197,6 +205,8 @@ public class Authenticator {
      *            The url to send the request
      * @param json
      *            The json to send
+     * @param proxy
+     *           The proxy to use (optional)
      * @throws IOException
      *            If it failed
      *
@@ -204,10 +214,10 @@ public class Authenticator {
      *
      * @return The request response
      */
-    private String sendPostRequest(String url, String json) throws AuthenticationException, IOException {
+    private String sendPostRequest(String url, String json, Proxy proxy) throws AuthenticationException, IOException {
         byte[] jsonBytes = json.getBytes(StandardCharsets.UTF_8);
         URL serverURL = new URL(url);
-        HttpURLConnection connection = (HttpURLConnection) serverURL.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) serverURL.openConnection(proxy != null ? proxy : Proxy.NO_PROXY);
         connection.setRequestMethod("POST");
 
         // Sending post request
