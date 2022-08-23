@@ -25,7 +25,6 @@ dependencies {
 }
 ```
 
-# How to work with the library
 ## Maven
 ```xml
 <repositories>
@@ -42,6 +41,7 @@ dependencies {
     </dependency>
 </dependencies>
 ```
+
 ## Other
 Use the JAR file from releases, or from the GitHub Actions.
 
