@@ -7,7 +7,7 @@ Thank you for reading this!
 
 ## Testing
 * You should test if your feature is actually working without causing any Issue.
-* There should be an usage example for your feature aswell.
+* There should be a usage example for your feature.
 
 ## Documentation
 Your code **has to be fully documented**.
