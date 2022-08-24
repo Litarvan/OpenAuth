@@ -44,6 +44,12 @@ import java.nio.charset.StandardCharsets;
 public class Authenticator {
 
     /**
+     * The Mojang official auth server
+     */
+    @Deprecated
+    public static final String MOJANG_AUTH_URL = "https://authserver.mojang.com/";
+
+    /**
      * The auth server URL
      */
     private final String authURL;
