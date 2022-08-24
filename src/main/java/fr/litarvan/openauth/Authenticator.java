@@ -45,6 +45,7 @@ public class Authenticator {
 
     /**
      * The Mojang official auth server
+     * @deprecated Should not be used since it doesn't work anymore.
      */
     @Deprecated
     public static final String MOJANG_AUTH_URL = "https://authserver.mojang.com/";
