@@ -82,7 +82,6 @@ public class MicrosoftAuthenticator {
         this.http = new HttpClient();
     }
 
-
     /**
      * Logs in a player using its Microsoft account credentials, and retrieve its Minecraft profile
      *
@@ -184,6 +183,19 @@ public class MicrosoftAuthenticator {
      * <b>If the token was retrieved using Azure AAD/MSAL, it should be prefixed with d=</b>
      *
      * @param tokens Player Microsoft account tokens pair
+     * @return The player Minecraft profile
+     * @throws MicrosoftAuthenticationException Thrown if one of the several HTTP requests failed at some point
+     */
+    public MicrosoftAuthResult loginWithTokens(AuthTokens tokens) throws MicrosoftAuthenticationException {
+        return loginWithTokens(tokens,true);
+    }
+
+    /**
+     * Logs in a player using a Microsoft account tokens retrieved earlier.
+     * <b>If the token was retrieved using Azure AAD/MSAL, it should be prefixed with d=</b>
+     *
+     * @param tokens Player Microsoft account tokens pair
+     * @param retrieveProfile Whether to retrieve the player profile
      * @return The player Minecraft profile
      * @throws MicrosoftAuthenticationException Thrown if one of the several HTTP requests failed at some point
      */
