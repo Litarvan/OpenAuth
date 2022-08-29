@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -33,10 +34,16 @@ public class HttpClient
     public static final String MIME_TYPE_URLENCODED_FORM = "application/x-www-form-urlencoded";
 
     private final Gson gson;
+    private final Proxy proxy;
 
     public HttpClient()
     {
+        this(Proxy.NO_PROXY);
+    }
+    public HttpClient(Proxy proxy)
+    {
         this.gson = new Gson();
+        this.proxy = proxy;
     }
 
 
@@ -174,7 +181,7 @@ public class HttpClient
             }
 
             try {
-                query.append(key).append('=').append(URLEncoder.encode(value, "UTF-8"));
+                query.append(key).append('=').append(URLEncoder.encode(value, StandardCharsets.UTF_8.name()));
             } catch (UnsupportedEncodingException ignored) {
                 // Can't happen
             }
@@ -187,7 +194,7 @@ public class HttpClient
     {
         HttpURLConnection connection;
         try {
-            connection = (HttpURLConnection) new URL(url).openConnection();
+            connection = (HttpURLConnection) new URL(url).openConnection(proxy);
         } catch (IOException e) {
             throw new MicrosoftAuthenticationException(e);
         }
@@ -197,6 +204,8 @@ public class HttpClient
                 "Chrome/71.0.3578.98 " +
                 "Safari/537.36";
 
+        connection.setConnectTimeout(30 * 1000); // 30s
+        connection.setReadTimeout(60 * 1000); // 60s
         connection.setRequestProperty("Accept-Language", "en-US");
         connection.setRequestProperty("Accept-Charset", "UTF-8");
         connection.setRequestProperty("User-Agent", userAgent);

@@ -1,4 +1,4 @@
-![OpenAuth Logo](https://github.com/Litarvan/OpenAuth/raw/master/banner.png)
+![OpenAuth Logo](./banner.png)
 
 > Minecraft authentication library which supports both Mojang and Microsoft accounts, or even custom servers
 
@@ -43,7 +43,7 @@ dependencies {
 ```
 
 ## Other
-Use the JAR file from releases.
+Use the JAR file from releases, or from the GitHub Actions.
 
 # How to use it (Microsoft)
 
