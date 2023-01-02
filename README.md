@@ -28,10 +28,10 @@ dependencies {
 ## Maven
 ```xml
 <repositories>
-    <repositories>
+    <repository>
         <id>litarvan</id>
         <url>https://litarvan.github.io/maven</url>
-    </repositories>
+    </repository>
 </repositories>
 <dependencies>
     <dependency>
