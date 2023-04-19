@@ -39,12 +39,14 @@ import java.util.concurrent.CompletableFuture;
 public class LoginFrame extends JFrame
 {
     private CompletableFuture<String> future;
+    private boolean completed;
 
     public LoginFrame()
     {
         this.setTitle("Microsoft Authentication");
         this.setSize(750, 750);
         this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.setContentPane(new JFXPanel());
     }
@@ -59,7 +61,8 @@ public class LoginFrame extends JFrame
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                future.completeExceptionally(new MicrosoftAuthenticationException("User closed the authentication window"));
+                if(!completed)
+                    future.complete(null);
             }
         });
 
@@ -76,8 +79,9 @@ public class LoginFrame extends JFrame
 
         webView.getEngine().locationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.contains("access_token")) {
-                this.setVisible(false);
                 this.future.complete(newValue);
+                completed = true;
+                this.dispose();
             }
         });
         webView.getEngine().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");

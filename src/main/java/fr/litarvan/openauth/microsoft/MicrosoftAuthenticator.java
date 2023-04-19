@@ -152,7 +152,9 @@ public class MicrosoftAuthenticator {
 
         return frame.start(url).thenApplyAsync(result -> {
             try {
-                return loginWithTokens(extractTokens(result),true);
+                if(result != null)
+                    return loginWithTokens(extractTokens(result),true);
+                else return null;
             } catch (MicrosoftAuthenticationException e) {
                 throw new CompletionException(e);
             }
