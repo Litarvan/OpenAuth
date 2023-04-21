@@ -147,12 +147,17 @@ public class MicrosoftAuthenticator {
      * @return A future resolved by the player Minecraft profile
      */
     public CompletableFuture<MicrosoftAuthResult> loginWithAsyncWebview() {
+        if(!System.getProperty("java.version").startsWith("1."))
+            CookieHandler.setDefault(new CookieManager());
+
         String url = String.format("%s?%s", MICROSOFT_AUTHORIZATION_ENDPOINT, http.buildParams(getLoginParams()));
         LoginFrame frame = new LoginFrame();
 
         return frame.start(url).thenApplyAsync(result -> {
             try {
-                return loginWithTokens(extractTokens(result),true);
+                if(result != null)
+                    return loginWithTokens(extractTokens(result),true);
+                else return null;
             } catch (MicrosoftAuthenticationException e) {
                 throw new CompletionException(e);
             }
