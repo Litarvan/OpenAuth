@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'fr.litarvan'
-version = '1.1.5'
+version = '1.1.6'
 archivesBaseName = 'openauth'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
