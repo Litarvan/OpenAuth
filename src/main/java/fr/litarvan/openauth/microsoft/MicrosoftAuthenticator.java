@@ -124,6 +124,15 @@ public class MicrosoftAuthenticator {
         }
     }
 
+    /**
+     * Logs in a player using its Microsoft account credentials and retrieves its access and xboxUserHash
+     *
+     * @param email    Player Microsoft account e-mail
+     * @param password Player Microsoft account password
+     * @param retrieveProfile if you want to retrieve the minecraft profile
+     * @return The player's xbox profile with minecraft access token
+     * @throws MicrosoftAuthenticationException Thrown if one of the several HTTP requests failed at some point
+     */
     public MicrosoftAuthResult loginWithCredentials(String email, String password, boolean retrieveProfile) throws MicrosoftAuthenticationException {
         CookieHandler currentHandler = CookieHandler.getDefault();
         CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
