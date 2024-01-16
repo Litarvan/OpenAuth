@@ -124,6 +124,39 @@ public class MicrosoftAuthenticator {
         }
     }
 
+    public MicrosoftAuthResult loginWithCredentials(String email, String password, boolean retrieveProfile) throws MicrosoftAuthenticationException {
+        CookieHandler currentHandler = CookieHandler.getDefault();
+        CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
+
+        Map<String, String> params = new HashMap<>();
+        params.put("login", email);
+        params.put("loginfmt", email);
+        params.put("passwd", password);
+
+        HttpURLConnection result;
+
+        try {
+            PreAuthData authData = preAuthRequest();
+            params.put("PPFT", authData.getPPFT());
+
+            result = http.followRedirects(http.postForm(authData.getUrlPost(), params));
+        } finally {
+            CookieHandler.setDefault(currentHandler);
+        }
+
+        try {
+            return loginWithTokens(extractTokens(result.getURL().toString()),retrieveProfile);
+        } catch (MicrosoftAuthenticationException e) {
+            if (match("(identity/confirm)", http.readResponse(result)) != null) {
+                throw new MicrosoftAuthenticationException(
+                        "User has enabled double-authentication or must allow sign-in on https://account.live.com/activity"
+                );
+            }
+
+            throw e;
+        }
+    }
+
     /**
      * Logs in a player using a webview to display Microsoft login page.
      * <b>This function blocks the current thread until the process is finished; this can cause your application to
