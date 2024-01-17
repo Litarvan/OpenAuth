@@ -227,6 +227,27 @@ public class MicrosoftAuthenticator {
     }
 
     /**
+     * Logs in a player using a Microsoft account refresh token retrieved earlier.
+     *
+     * @param refreshToken Player Microsoft account refresh token
+     * @param retrieveProfile if you want to retrieve the minecraft profile
+     * @return The player's xbox profile with minecraft access token
+     * @throws MicrosoftAuthenticationException Thrown if one of the several HTTP requests failed at some point
+     */
+    public MicrosoftAuthResult loginWithRefreshToken(String refreshToken, boolean retrieveProfile) throws MicrosoftAuthenticationException {
+        Map<String, String> params = getLoginParams();
+        params.put("refresh_token", refreshToken);
+        params.put("grant_type", "refresh_token");
+
+        MicrosoftRefreshResponse response = http.postFormGetJson(
+                MICROSOFT_TOKEN_ENDPOINT,
+                params, MicrosoftRefreshResponse.class
+        );
+
+        return loginWithTokens(new AuthTokens(response.getAccessToken(), response.getRefreshToken()),retrieveProfile);
+    }
+
+    /**
      * Logs in a player using a Microsoft account tokens retrieved earlier.
      * <b>If the token was retrieved using Azure AAD/MSAL, it should be prefixed with d=</b>
      *
